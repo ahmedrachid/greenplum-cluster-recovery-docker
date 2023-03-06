@@ -1,0 +1,29 @@
+version: '1.0'
+services:
+   minio:
+     image: minio/minio
+     container_name: minio
+     environment:
+       - MINIO_ACCESS_KEY=minioadmin
+       - MINIO_SECRET_KEY=minioadmin
+       - MINIO_REGION_NAME=us-east-1
+     ports:
+       - "9000:9000"
+       - "9001:9001"
+     entrypoint: sh
+     command: -c 'mkdir -p /data/gpcr-backups/demo && minio server /data --console-address ":9001" --certs-dir /root/.minio/certs'
+     volumes:
+       - ${PWD}/data:/data
+       - ./public.crt:/root/.minio/certs/public.crt
+       - ./private.key:/root/.minio/certs/private.key
+   gpdb-primary:
+     image: docker.io/vldbuk/gpdb_demo_repo:gpdb_demo
+     privileged: true
+     entrypoint: /usr/lib/systemd/systemd
+     volumes:
+       - ${PWD}/greenplum-cluster-recovery-1.0.0+beta.2-1.el7.x86_64.rpm:/home/gpadmin/greenplum-cluster-recovery-1.0.0+beta.2-1.el7.x86_64.rpm
+       - ${PWD}/greenplum-db-6.23.1-rhel8-x86_64.rpm:/home/gpadmin/greenplum-db-6.23.1-rhel8-x86_64.rpm
+       - ${PWD}/s3_stanza_config_file.yml:/home/gpadmin/s3_stanza_config_file.yml
+       - ${PWD}/script.sh:/home/gpadmin/script.sh
+     depends_on:
+       - minio
