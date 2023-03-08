@@ -9,7 +9,7 @@ docker compose up -d
   docker compose exec -ti gpdb-primary-cluster bash
   /home/gpadmin/script.sh
   ```
-3. On DR cluster, run:
+3. Open another terminal for DR cluster, and run:
   ```bash
   docker compose exec -ti gpdb-disaster-recovery-cluster bash
   /home/gpadmin/script.sh
