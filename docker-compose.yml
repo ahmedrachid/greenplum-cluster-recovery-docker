@@ -1,4 +1,4 @@
-version: '1.0'
+version: '3.0'
 services:
    minio:
      image: minio/minio
@@ -14,8 +14,8 @@ services:
      command: -c 'mkdir -p /data/gpcr-backups/demo && minio server /data --console-address ":9001" --certs-dir /root/.minio/certs'
      volumes:
        - ${PWD}/data:/data
-       - ./public.crt:/root/.minio/certs/public.crt
-       - ./private.key:/root/.minio/certs/private.key
+       - ${PWD}/public.crt:/root/.minio/certs/public.crt
+       - ${PWD}/private.key:/root/.minio/certs/private.key
 
    gpdb-primary-cluster:
      image: docker.io/ahmedrachid/gpdb_demo:6.21
