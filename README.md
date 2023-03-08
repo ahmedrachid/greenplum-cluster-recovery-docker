@@ -2,7 +2,7 @@
 
 1. Start docker containers:
 ```bash
-docker compose up
+docker compose up -d
 ```
 2. On primary cluster, run:
 ```bash
