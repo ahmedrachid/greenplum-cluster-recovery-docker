@@ -8,6 +8,7 @@ docker compose up -d
 ```bash
   docker compose exec -ti gpdb-primary-cluster bash
   /home/gpadmin/script.sh
+  su - gpadmin
   ```
 3. Open another terminal for DR cluster, and run:
   ```bash
