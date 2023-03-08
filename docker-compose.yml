@@ -18,7 +18,7 @@ services:
        - ./private.key:/root/.minio/certs/private.key
 
    gpdb-primary-cluster:
-     image: docker.io/vldbuk/gpdb_demo_repo:gpdb_demo
+     image: docker.io/ahmedrachid/gpdb_demo:6.21
      privileged: true
      entrypoint: /usr/lib/systemd/systemd
      volumes:
@@ -31,7 +31,7 @@ services:
        - minio
 
    gpdb-disaster-recovery-cluster:
-     image: docker.io/vldbuk/gpdb_demo_repo:gpdb_demo
+     image: docker.io/ahmedrachid/gpdb_demo:6.21
      privileged: true
      entrypoint: /usr/lib/systemd/systemd
      volumes:
