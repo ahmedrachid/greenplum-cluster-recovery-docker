@@ -1,6 +1,6 @@
 # gpdb-6.23-docker
 
-1. Start docker compose, run containers:
+1. Start docker containers:
 ```bash
 docker compose up
 ```
