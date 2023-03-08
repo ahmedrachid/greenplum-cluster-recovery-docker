@@ -14,10 +14,15 @@ docker compose up
   docker compose exec -ti gpdb-disaster-recovery-cluster bash
   /home/gpadmin/script.sh
   su - gpadmin
-  gpcr info
-  gpcr restore --restore-point **** 
-  gpstart -qa 
-  psql demo
-    
  ```
-  
+4. We have automated the backup creation, you can now restore the primary cluster on the DR cluster, run:
+  ```bash
+  # Pick the restore-point id by running:
+  gpcr info
+  # Restore your GPDB
+  gpcr restore --restore-point **** 
+  # Start the DR cluster
+  gpstart -qa 
+  # Connect to it
+  psql demo
+   ```
