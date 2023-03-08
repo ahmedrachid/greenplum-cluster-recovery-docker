@@ -15,7 +15,7 @@ docker compose up
   /home/gpadmin/script.sh
   su - gpadmin
  ```
-4. We have automated the backup creation, you can now restore the primary cluster on the DR cluster, run:
+4. We have automated the backup creation, you can now restore the primary cluster to DR cluster, run:
   ```bash
   # Pick the restore-point id by running:
   gpcr info
