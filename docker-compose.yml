@@ -16,7 +16,8 @@ services:
        - ${PWD}/data:/data
        - ./public.crt:/root/.minio/certs/public.crt
        - ./private.key:/root/.minio/certs/private.key
-   gpdb-primary:
+
+   gpdb-primary-cluster:
      image: docker.io/vldbuk/gpdb_demo_repo:gpdb_demo
      privileged: true
      entrypoint: /usr/lib/systemd/systemd
@@ -24,6 +25,20 @@ services:
        - ${PWD}/greenplum-cluster-recovery-1.0.0+beta.2-1.el7.x86_64.rpm:/home/gpadmin/greenplum-cluster-recovery-1.0.0+beta.2-1.el7.x86_64.rpm
        - ${PWD}/greenplum-db-6.23.1-rhel8-x86_64.rpm:/home/gpadmin/greenplum-db-6.23.1-rhel8-x86_64.rpm
        - ${PWD}/s3_stanza_config_file.yml:/home/gpadmin/s3_stanza_config_file.yml
-       - ${PWD}/script.sh:/home/gpadmin/script.sh
+       - ${PWD}/restore_config_file.yml:/home/gpadmin/restore_config_file.yml
+       - ${PWD}/script_backup.sh:/home/gpadmin/script.sh
+     depends_on:
+       - minio
+
+   gpdb-disaster-recovery-cluster:
+     image: docker.io/vldbuk/gpdb_demo_repo:gpdb_demo
+     privileged: true
+     entrypoint: /usr/lib/systemd/systemd
+     volumes:
+       - ${PWD}/greenplum-cluster-recovery-1.0.0+beta.2-1.el7.x86_64.rpm:/home/gpadmin/greenplum-cluster-recovery-1.0.0+beta.2-1.el7.x86_64.rpm
+       - ${PWD}/greenplum-db-6.23.1-rhel8-x86_64.rpm:/home/gpadmin/greenplum-db-6.23.1-rhel8-x86_64.rpm
+       - ${PWD}/s3_stanza_config_file.yml:/home/gpadmin/s3_stanza_config_file.yml
+       - ${PWD}/restore_config_file.yml:/home/gpadmin/restore_config_file.yml
+       - ${PWD}/script_restore.sh:/home/gpadmin/script.sh
      depends_on:
        - minio

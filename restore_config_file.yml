@@ -1,0 +1,73 @@
+# Restore configuration file example
+#
+# Example <restore_config_file> for `gpcr configure restore --restore-config-file <restore_config_file> --stanza-config-file <stanza_config_file>`.
+#
+# The below example configuration would create a GPDB recovery cluster with the following details:
+# content | port |    host   | data_directory
+# --------------------------------------------
+#      -1 | 6000 | localhost |  /data/gpseg-1
+#       0 | 6002 | localhost |   /data/gpseg0
+#       1 | 6003 | localhost |   /data/gpseg1
+#       2 | 6004 | localhost |   /data/gpseg2
+#
+
+##################################################
+# General configurations
+##################################################
+
+# default GPDB Superuser (usually gpadmin)
+pguser: gpadmin
+
+# data directory name for the master and primary segment instances
+#
+# Note: equivalent to SEG_PREFIX from gpinitsystem
+prefix: gpseg
+
+# number of expected segments to be restored
+#
+# Note: this should equal the number of segment_hosts multipied by the
+# number of data_directories (do not include the master segment)
+num_segments: 4
+
+##################################################
+# Configurations for master segment
+##################################################
+
+# master segment hostname for the GPDB cluster
+#
+# Note: equivalent to MASTER_HOSTNAME used by gpinitsystem
+master_host: localhost
+
+# master segment port
+#
+# Note: equivalent to MASTER_PORT used by gpinitsystem
+master_port: 5432
+
+# master segment data directory
+#
+# Note: equivalent to MASTER_DIRECTORY used by gpinitsystem
+master_data_directory: /gpdb/gpmaster
+
+##################################################
+# Configurations for primary segments
+##################################################
+
+# primary segment hostname(s) for the GPDB cluster
+#
+# Note: similar to host file used by gpinitsystem
+segment_hosts:
+ - localhost
+
+# base port to start from for primary segment instances
+#
+# Note: equivalent to PORT_BASE used by gpinitsystem
+segment_port_base: 6000
+
+# primary segment data directory base location(s)
+#
+# Note: similar to `declare -a DATA_DIRECTORY` used by gpinitsystem
+data_directories:
+ - /gpdb/gpdata1
+ - /gpdb/gpdata2
+ - /gpdb/gpdata3
+ - /gpdb/gpdata4
