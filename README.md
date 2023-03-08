@@ -13,6 +13,7 @@ docker compose up
   ```bash
   docker compose exec -ti gpdb-disaster-recovery-cluster bash
   /home/gpadmin/script.sh
+  su - gpadmin
   gpcr info
   gpcr restore --restore-point **** 
   gpstart -qa 
