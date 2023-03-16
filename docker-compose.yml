@@ -16,14 +16,25 @@ services:
        - ${PWD}/data:/data
        - ${PWD}/public.crt:/root/.minio/certs/public.crt
        - ${PWD}/private.key:/root/.minio/certs/private.key
-
+   minios3:
+     image: minio/minio
+     container_name: minios3
+     environment:
+       - MINIO_ACCESS_KEY=minioadmin
+       - MINIO_SECRET_KEY=minioadmin
+       - MINIO_REGION_NAME=us-east-1
+     entrypoint: sh
+     command: -c 'mkdir -p /data/pxf/demo && minio server /data --console-address ":9001" '
+     ports:
+       - "9002:9000"
+       - "9003:9001"
    gpdb-primary-cluster:
      image: docker.io/ahmedrachid/gpdb_demo:6.21
      privileged: true
      entrypoint: /usr/lib/systemd/systemd
      volumes:
        - ${PWD}/greenplum-cluster-recovery-1.0.0+beta.2-1.el7.x86_64.rpm:/home/gpadmin/greenplum-cluster-recovery-1.0.0+beta.2-1.el7.x86_64.rpm
-       - ${PWD}/greenplum-db-6.23.1-rhel8-x86_64.rpm:/home/gpadmin/greenplum-db-6.23.1-rhel8-x86_64.rpm
+       - ${PWD}/greenplum-db-6.23.3-rhel8-x86_64.rpm:/home/gpadmin/greenplum-db-6.23.3-rhel8-x86_64.rpm
        - ${PWD}/s3_stanza_config_file.yml:/home/gpadmin/s3_stanza_config_file.yml
        - ${PWD}/restore_config_file.yml:/home/gpadmin/restore_config_file.yml
        - ${PWD}/script_backup.sh:/home/gpadmin/script.sh
@@ -36,7 +47,7 @@ services:
      entrypoint: /usr/lib/systemd/systemd
      volumes:
        - ${PWD}/greenplum-cluster-recovery-1.0.0+beta.2-1.el7.x86_64.rpm:/home/gpadmin/greenplum-cluster-recovery-1.0.0+beta.2-1.el7.x86_64.rpm
-       - ${PWD}/greenplum-db-6.23.1-rhel8-x86_64.rpm:/home/gpadmin/greenplum-db-6.23.1-rhel8-x86_64.rpm
+       - ${PWD}/greenplum-db-6.23.3-rhel8-x86_64.rpm:/home/gpadmin/greenplum-db-6.23.3-rhel8-x86_64.rpm
        - ${PWD}/s3_stanza_config_file.yml:/home/gpadmin/s3_stanza_config_file.yml
        - ${PWD}/restore_config_file.yml:/home/gpadmin/restore_config_file.yml
        - ${PWD}/script_restore.sh:/home/gpadmin/script.sh
