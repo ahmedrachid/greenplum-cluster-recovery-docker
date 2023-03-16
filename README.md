@@ -5,7 +5,7 @@
 
 This Docker project, contains a GP primary cluster, recovery cluster and Minio as archive location, under a single docker network, as below:
 
-![alt text](https://i.ibb.co/2n8WVVT/On-Paste-20230316-195807.png)
+![alt text](img.png)
 
 ### **HOW TO USE** :
 1. Move to this folder and start docker containers:
